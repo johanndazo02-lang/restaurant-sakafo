@@ -1,0 +1,776 @@
+/* =========================================================
+   1. VARIABLES
+   ========================================================= */
+:root {
+  --principale: #9a3412;       /* terre cuite */
+  --principale-fonce: #7c2d12;
+  --accent: #15803d;           /* vert brèdes */
+  --texte: #2b2118;
+  --texte-doux: #6b5b4e;
+  --creme: #fdf6ec;
+  --sombre: #1f1611;
+  --blanc: #ffffff;
+  --rayon: 14px;
+  --ombre: 0 6px 24px rgba(43, 33, 24, 0.08);
+  --largeur-max: 1100px;
+  --police-titre: "Playfair Display", Georgia, serif;
+  --police-texte: "Poppins", system-ui, sans-serif;
+}
+
+/* =========================================================
+   2. BASE
+   ========================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--police-texte);
+  color: var(--texte);
+  background: var(--blanc);
+  line-height: 1.65;
+}
+
+h1, h2, h3 {
+  font-family: var(--police-titre);
+  line-height: 1.2;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Bandeau "site de démonstration" */
+.bandeau-demo {
+  background: var(--principale);
+  color: var(--blanc);
+  text-align: center;
+  font-size: 0.82rem;
+  padding: 8px 16px;
+}
+
+/* =========================================================
+   3. BOUTONS
+   ========================================================= */
+.btn {
+  display: inline-block;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+  background: var(--principale);
+  color: var(--blanc);
+  padding: 12px 26px;
+  border: 2px solid var(--principale);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, color 0.2s;
+}
+
+.btn:hover {
+  background: var(--principale-fonce);
+  border-color: var(--principale-fonce);
+  transform: translateY(-2px);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  transform: none;
+}
+
+.btn-petit {
+  padding: 8px 18px;
+  font-size: 0.9rem;
+}
+
+/* Bouton transparent avec contour blanc (sur la photo du hero) */
+.btn-contour {
+  background: transparent;
+  border-color: var(--blanc);
+}
+
+.btn-contour:hover {
+  background: var(--blanc);
+  border-color: var(--blanc);
+  color: var(--texte);
+}
+
+.btn-whatsapp {
+  background: #25d366;
+  border-color: #25d366;
+  margin-top: 12px;
+}
+
+.btn-whatsapp:hover {
+  background: #1da851;
+  border-color: #1da851;
+}
+
+/* =========================================================
+   4. EN-TÊTE (sticky, change d'aspect au défilement)
+   ========================================================= */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--blanc);
+  transition: box-shadow 0.3s;
+}
+
+/* Classe ajoutée par le JS quand on a défilé */
+.header.defile {
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  transition: padding 0.3s;
+}
+
+.header.defile .header-inner {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.logo {
+  font-family: var(--police-titre);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--principale);
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+/* Menu sur mobile : caché, en colonne, sous le logo */
+.nav {
+  display: none;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 10px 0;
+}
+
+.nav.ouvert {
+  display: flex;
+}
+
+.nav a:not(.btn):hover {
+  color: var(--principale);
+}
+
+/* Bouton burger : 3 traits empilés (flex en colonne) */
+.burger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.burger span {
+  display: block;
+  width: 26px;
+  height: 3px;
+  background: var(--texte);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.burger.ouvert span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.burger.ouvert span:nth-child(2) { opacity: 0; }
+.burger.ouvert span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* =========================================================
+   5. HERO
+   ========================================================= */
+.hero {
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--blanc);
+  padding: 70px 20px;
+  background:
+    linear-gradient(rgba(31, 22, 17, 0.55), rgba(31, 22, 17, 0.65)),
+    url("images/hero.jpg") center / cover no-repeat,
+    linear-gradient(135deg, var(--principale-fonce), var(--sombre));
+}
+
+.hero-contenu {
+  max-width: 720px;
+}
+
+.hero-sur-titre {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fdba74;
+}
+
+.hero h1 {
+  font-size: clamp(2.1rem, 6vw, 3.6rem);
+  margin: 12px 0 16px;
+}
+
+.hero-texte {
+  font-size: 1.1rem;
+  margin-bottom: 28px;
+  opacity: 0.95;
+}
+
+.hero-boutons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Badge « Ouvert maintenant / Fermé » (texte écrit par le JS) */
+.statut {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 0.9rem;
+}
+
+.statut:empty {
+  display: none;            /* invisible tant que le JS ne l'a pas rempli */
+}
+
+.statut::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #f87171;      /* rouge = fermé */
+}
+
+.statut.ouvert::before {
+  background: #4ade80;      /* vert = ouvert */
+}
+
+/* =========================================================
+   6. SECTIONS
+   ========================================================= */
+.section {
+  padding: 80px 0;
+  scroll-margin-top: 70px;
+}
+
+#reservation,
+#infos {
+  scroll-margin-top: 80px;
+}
+
+.section-creme {
+  background: var(--creme);
+}
+
+.section-sombre {
+  background: var(--sombre);
+  color: #e7ded5;
+}
+
+.section h2 {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  margin-bottom: 18px;
+  color: var(--principale);
+}
+
+.section-sombre h2 {
+  color: var(--blanc);
+}
+
+.sur-titre {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.centre,
+.titre-centre {
+  text-align: center;
+}
+
+.titre-centre {
+  margin-bottom: 36px !important;
+}
+
+/* =========================================================
+   7. À PROPOS (Grid : 1 colonne mobile, 2 sur grand écran)
+   ========================================================= */
+.apropos {
+  display: grid;
+  gap: 40px;
+  align-items: center;
+}
+
+.apropos-photo {
+  min-height: 320px;
+  border-radius: var(--rayon);
+  background:
+    url("images/salle.jpg") center / cover,
+    linear-gradient(135deg, #fed7aa, #fdba74);
+}
+
+.chiffres {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 24px;
+}
+
+.chiffres strong {
+  display: block;
+  font-family: var(--police-titre);
+  font-size: 1.9rem;
+  color: var(--principale);
+}
+
+/* =========================================================
+   8. LA CARTE : filtres + cartes de plats générées par le JS
+   ========================================================= */
+.filtres {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 36px;
+}
+
+.filtre {
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 8px 20px;
+  border: 2px solid var(--principale);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--principale);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.filtre:hover,
+.filtre.actif {
+  background: var(--principale);
+  color: var(--blanc);
+}
+
+/* Grille responsive sans media query */
+.liste-plats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: 22px;
+}
+
+.plat {
+  background: var(--blanc);
+  border-radius: var(--rayon);
+  box-shadow: var(--ombre);
+  padding: 22px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  animation: apparition 0.35s ease;
+}
+
+/* Petite animation quand les cartes apparaissent */
+@keyframes apparition {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.plat-icone {
+  flex-shrink: 0;            /* l'icône ne rétrécit jamais */
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--creme);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+}
+
+.plat-texte {
+  flex: 1;                   /* le texte prend toute la place restante */
+}
+
+.plat-entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.plat h3 {
+  font-size: 1.15rem;
+}
+
+.plat-prix {
+  font-weight: 600;
+  color: var(--principale);
+  white-space: nowrap;       /* le prix ne passe jamais à la ligne */
+}
+
+.plat-description {
+  font-size: 0.9rem;
+  color: var(--texte-doux);
+  margin-top: 4px;
+}
+
+.plat-badge {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: #dcfce7;
+  padding: 2px 10px;
+  border-radius: 999px;
+}
+
+.note-prix {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--texte-doux);
+  margin-top: 30px;
+}
+
+/* =========================================================
+   9. CARROUSEL D'AVIS
+   ========================================================= */
+.carrousel {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.avis {
+  flex: 1;
+  min-height: 190px;
+  background: var(--creme);
+  border-radius: var(--rayon);
+  padding: 30px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  animation: apparition 0.4s ease;
+}
+
+.avis-etoiles {
+  color: #f59e0b;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.avis-texte {
+  font-family: var(--police-titre);
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+.avis-auteur {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: var(--texte-doux);
+}
+
+.carrousel-fleche {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--principale);
+  background: var(--blanc);
+  color: var(--principale);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.carrousel-fleche:hover {
+  background: var(--principale);
+  color: var(--blanc);
+}
+
+.points {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.point {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: #e5d6c6;
+  cursor: pointer;
+  transition: background 0.2s, width 0.2s;
+}
+
+.point.actif {
+  width: 26px;
+  border-radius: 999px;
+  background: var(--principale);
+}
+
+/* =========================================================
+   10. HORAIRES, ADRESSE ET RÉSERVATION
+   ========================================================= */
+.infos {
+  display: grid;
+  gap: 40px;
+}
+
+.infos p {
+  margin-bottom: 6px;
+}
+
+.infos em {
+  opacity: 0.6;
+  font-size: 0.85rem;
+}
+
+.horaires {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.horaires td {
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.horaires td:last-child {
+  text-align: right;
+}
+
+/* Ligne du jour, ajoutée par le JS */
+.horaires tr.aujourdhui {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--blanc);
+  font-weight: 600;
+}
+
+.carte-maps {
+  display: block;
+  width: 100%;
+  height: 240px;
+  border: 0;
+  border-radius: var(--rayon);
+  margin-top: 24px;
+}
+
+.formulaire {
+  background: var(--blanc);
+  color: var(--texte);
+  padding: 28px;
+  border-radius: var(--rayon);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-self: start;
+}
+
+.formulaire h3 {
+  font-size: 1.5rem;
+  color: var(--principale);
+  margin-bottom: 10px;
+}
+
+.formulaire label {
+  font-weight: 500;
+  font-size: 0.92rem;
+}
+
+.facultatif {
+  font-weight: 400;
+  color: var(--texte-doux);
+}
+
+.formulaire input,
+.formulaire textarea {
+  width: 100%;
+  font: inherit;
+  padding: 10px 12px;
+  border: 1px solid #dccfc2;
+  border-radius: 8px;
+}
+
+.formulaire input:focus,
+.formulaire textarea:focus {
+  outline: 2px solid var(--principale);
+  border-color: transparent;
+}
+
+.formulaire .champ-invalide {
+  border-color: #dc2626;
+}
+
+.deux-colonnes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.erreur {
+  color: #dc2626;
+  font-size: 0.82rem;
+  min-height: 1em;
+  margin-bottom: 4px;
+}
+
+.formulaire .btn {
+  margin-top: 8px;
+}
+
+.formulaire-message {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.formulaire-message.echec {
+  color: #dc2626;
+}
+
+/* =========================================================
+   11. PIED DE PAGE
+   ========================================================= */
+.footer {
+  background: #120c08;
+  color: #a8998b;
+  font-size: 0.9rem;
+  padding: 50px 0 20px;
+}
+
+.footer-grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+}
+
+.footer .logo {
+  color: var(--blanc);
+  margin-bottom: 8px;
+}
+
+.footer h3 {
+  font-family: var(--police-texte);
+  color: var(--blanc);
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.footer-liens {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-liens a:hover {
+  color: var(--blanc);
+}
+
+.footer-copyright {
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 40px;
+  padding-top: 20px;
+}
+
+/* =========================================================
+   12. RESPONSIVE (grand écran)
+   ========================================================= */
+@media (min-width: 768px) {
+  .burger {
+    display: none;
+  }
+
+  .nav {
+    display: flex;
+    width: auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+    padding: 0;
+  }
+
+  .apropos,
+  .infos {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Petits téléphones : flèches du carrousel plus discrètes */
+@media (max-width: 480px) {
+  .carrousel {
+    gap: 8px;
+  }
+
+  .carrousel-fleche {
+    width: 36px;
+    height: 36px;
+    font-size: 1.3rem;
+  }
+
+  .avis {
+    padding: 22px 16px;
+  }
+
+  .deux-colonnes {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Respect des préférences : pas d'animation pour ceux qui les désactivent */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

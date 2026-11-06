@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sakafo — Restaurant de cuisine malgache à Antananarivo</title>
+  <meta name="description" content="Sakafo, restaurant de cuisine malgache traditionnelle à Antananarivo : romazava, ravitoto, akoho sy voanio, mofo gasy. Réservez votre table en ligne.">
+  <!-- Site de démonstration : on demande à Google de NE PAS l'afficher dans ses résultats -->
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- Polices Google : Playfair Display (titres) et Poppins (texte) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== BANDEAU DE DÉMONSTRATION : le restaurant est fictif ===== -->
+  <div class="bandeau-demo">
+    Site de démonstration — le restaurant Sakafo est fictif. Réalisé par <strong>Johann DAZO</strong>, développeur web.
+  </div>
+
+  <!-- ===== EN-TÊTE ===== -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#accueil" class="logo">Sakafo<span>.</span></a>
+
+      <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav">
+        <a href="#apropos">Le restaurant</a>
+        <a href="#menu">La carte</a>
+        <a href="#avis">Avis</a>
+        <a href="#infos">Horaires</a>
+        <a href="#reservation" class="btn btn-petit">Réserver</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="accueil">
+      <div class="hero-contenu">
+        <p class="hero-sur-titre">Antananarivo · Analakely</p>
+        <h1>La vraie cuisine malgache, comme à la maison</h1>
+        <p class="hero-texte">Romazava, ravitoto, akoho sy voanio… des recettes de famille préparées chaque jour avec des produits du marché.</p>
+        <div class="hero-boutons">
+          <a href="#menu" class="btn">Voir la carte</a>
+          <a href="#reservation" class="btn btn-contour">Réserver une table</a>
+        </div>
+        <!-- Rempli par le JS : « Ouvert maintenant » ou « Fermé » -->
+        <p class="statut" id="statut-ouverture"></p>
+      </div>
+    </section>
+
+    <!-- ===== À PROPOS ===== -->
+    <section class="section" id="apropos">
+      <div class="container apropos">
+        <div class="apropos-photo" role="img" aria-label="Salle du restaurant Sakafo"></div>
+        <div>
+          <p class="sur-titre">Notre histoire</p>
+          <h2>Une cuisine de famille depuis 2015</h2>
+          <p>
+            Chez Sakafo (« repas » en malgache), on cuisine comme nos grands-mères :
+            un bon <em>vary</em> (riz) bien chaud, des <em>laoka</em> mijotés longtemps
+            et des brèdes fraîches achetées le matin au marché d'Analakely.
+          </p>
+          <ul class="chiffres">
+            <li><strong>40</strong> couverts</li>
+            <li><strong>100 %</strong> fait maison</li>
+            <li><strong>4,7/5</strong> avis clients</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LA CARTE (MENU) ===== -->
+    <section class="section section-creme" id="menu">
+      <div class="container">
+        <p class="sur-titre centre">Fait maison chaque jour</p>
+        <h2 class="titre-centre">Notre carte</h2>
+
+        <!-- Boutons de filtre : data-categorie est lu par le JS -->
+        <div class="filtres" role="group" aria-label="Filtrer la carte">
+          <button class="filtre actif" data-categorie="tout">Tout</button>
+          <button class="filtre" data-categorie="entrees">Entrées</button>
+          <button class="filtre" data-categorie="plats">Plats</button>
+          <button class="filtre" data-categorie="desserts">Desserts</button>
+          <button class="filtre" data-categorie="boissons">Boissons</button>
+        </div>
+
+        <!-- Vide : les cartes des plats sont créées par le JS -->
+        <div class="liste-plats" id="liste-plats"></div>
+
+        <p class="note-prix">Tous nos plats sont servis avec du riz (<em>vary</em>). Prix en ariary, service compris.</p>
+      </div>
+    </section>
+
+    <!-- ===== AVIS CLIENTS (CARROUSEL) ===== -->
+    <section class="section" id="avis">
+      <div class="container">
+        <p class="sur-titre centre">Ils sont venus</p>
+        <h2 class="titre-centre">Avis de nos clients</h2>
+
+        <div class="carrousel">
+          <button class="carrousel-fleche precedent" aria-label="Avis précédent">‹</button>
+          <!-- Rempli par le JS -->
+          <blockquote class="avis" id="avis-actuel" aria-live="polite"></blockquote>
+          <button class="carrousel-fleche suivant" aria-label="Avis suivant">›</button>
+        </div>
+        <div class="points" id="points-avis"></div>
+      </div>
+    </section>
+
+    <!-- ===== HORAIRES, ADRESSE ET RÉSERVATION ===== -->
+    <section class="section section-sombre" id="infos">
+      <div class="container infos">
+        <div>
+          <h2>Horaires &amp; adresse</h2>
+          <!-- Le JS met en valeur la ligne du jour -->
+          <table class="horaires" id="horaires">
+            <tr data-jour="1"><td>Lundi</td><td>Fermé</td></tr>
+            <tr data-jour="2"><td>Mardi</td><td>11h00 – 22h00</td></tr>
+            <tr data-jour="3"><td>Mercredi</td><td>11h00 – 22h00</td></tr>
+            <tr data-jour="4"><td>Jeudi</td><td>11h00 – 22h00</td></tr>
+            <tr data-jour="5"><td>Vendredi</td><td>11h00 – 23h00</td></tr>
+            <tr data-jour="6"><td>Samedi</td><td>11h00 – 23h00</td></tr>
+            <tr data-jour="0"><td>Dimanche</td><td>11h00 – 16h00</td></tr>
+          </table>
+
+          <p>📍 Rue Rainitovo, Analakely, Antananarivo <em>(adresse d'exemple)</em></p>
+          <p>📞 +261 34 00 000 00 <em>(numéro d'exemple)</em></p>
+          <a href="https://wa.me/261340000000" class="btn btn-whatsapp" target="_blank" rel="noopener">Réserver sur WhatsApp</a>
+
+          <iframe
+            class="carte-maps"
+            src="https://www.google.com/maps?q=Analakely,Antananarivo,Madagascar&output=embed"
+            title="Carte : restaurant Sakafo à Analakely, Antananarivo"
+            loading="lazy">
+          </iframe>
+        </div>
+
+        <!-- Formulaire de réservation -->
+        <form class="formulaire" id="reservation" novalidate>
+          <h3>Réserver une table</h3>
+
+          <label for="nom">Nom</label>
+          <input type="text" id="nom" name="nom" autocomplete="name">
+          <p class="erreur" id="erreur-nom"></p>
+
+          <label for="telephone">Téléphone</label>
+          <input type="tel" id="telephone" name="telephone" placeholder="034 00 000 00" autocomplete="tel">
+          <p class="erreur" id="erreur-telephone"></p>
+
+          <div class="deux-colonnes">
+            <div>
+              <label for="date">Date</label>
+              <input type="date" id="date" name="date">
+              <p class="erreur" id="erreur-date"></p>
+            </div>
+            <div>
+              <label for="heure">Heure</label>
+              <input type="time" id="heure" name="heure" step="900">
+              <p class="erreur" id="erreur-heure"></p>
+            </div>
+          </div>
+
+          <label for="personnes">Nombre de personnes</label>
+          <input type="number" id="personnes" name="personnes" min="1" max="20" value="2">
+          <p class="erreur" id="erreur-personnes"></p>
+
+          <label for="message">Demande particulière <span class="facultatif">(facultatif)</span></label>
+          <textarea id="message" name="message" rows="3" placeholder="Anniversaire, allergie, chaise bébé…"></textarea>
+
+          <!-- Sujet de l'email reçu via Formspree -->
+          <input type="hidden" name="_subject" value="Nouvelle réservation — Sakafo">
+
+          <button type="submit" class="btn">Envoyer la réservation</button>
+          <p class="formulaire-message" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== PIED DE PAGE ===== -->
+  <footer class="footer">
+    <div class="container footer-grille">
+      <div>
+        <p class="logo">Sakafo<span>.</span></p>
+        <p>Cuisine malgache traditionnelle au cœur d'Antananarivo.</p>
+      </div>
+      <div>
+        <h3>Navigation</h3>
+        <ul class="footer-liens">
+          <li><a href="#apropos">Le restaurant</a></li>
+          <li><a href="#menu">La carte</a></li>
+          <li><a href="#avis">Avis</a></li>
+          <li><a href="#reservation">Réserver</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Paiement accepté</h3>
+        <ul class="footer-liens">
+          <li>Espèces</li>
+          <li>MVola · Orange Money · Airtel Money</li>
+        </ul>
+      </div>
+    </div>
+    <p class="footer-copyright">© <span id="annee"></span> Sakafo — Antananarivo, Madagascar</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
